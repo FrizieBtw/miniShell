@@ -71,7 +71,17 @@ void shell_execute_line(struct Shell *s){
     else {
         printf("Commande inconnue.\n");
     }
-    string_vector_free(&cmd_line);
+    shell_buffering(s, &cmd_line);
+}
+
+void shell_buffering(struct Shell *s, struct StringVector *cmd_line){
+    if (s->buffer_size == 10) {
+        string_vector_free(&s->buffer[10]);
+        for (int i = s->buffer_size; i > 0; i--) {
+            s->buffer[i] = s->buffer[i-1];
+        }
+    }
+    s->buffer[0] = *cmd_line;
 }
 
 int main(int argc, char** argv)

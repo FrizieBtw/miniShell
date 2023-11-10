@@ -8,7 +8,7 @@ struct Shell {
     bool running;
     int line_number;
     size_t buffer_size;
-    char * buffer;
+    struct StringVector * buffer;
 };
 
 void shell_init(struct Shell *s);

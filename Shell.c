@@ -25,12 +25,12 @@ void shell_run(struct Shell *s) {
         shell_execute_line(s);
         
     }
-    return ( EXIT_SUCCESS );
+    return;
 }
 
 void shell_free(struct Shell *s){
     for (int i = 0; i < (int)( s->buffer_size ); i++) {
-        free(s->buffer[i]);
+        string_vector_free(&s->buffer[i]);
     }
     free(s->buffer);
 }
@@ -58,6 +58,14 @@ void shell_execute_line(struct Shell *s){
             if (chdir(argv) != 0) {
                 printf("Erreur lors du changement de répertoire.\n");
             }
+        }
+    }
+    else if (strcmp(args, "!")== 0) {
+        if (cmd_line.size == 1) {
+            system(getenv("SHELL"));
+        }
+        else {
+            system(strjoinarray(cmd, &cmd_line, 1, cmd_line.size, " "));
         }
     }
     else {

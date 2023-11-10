@@ -67,12 +67,12 @@ split_line( char *line )
 }
 
 char *
-strjoinarray( char *dest, const struct StringVector *this, size_t fist, size_t last, char *glue )
+strjoinarray( char *dest, const struct StringVector *this, size_t first, size_t last, char *glue )
 {
     size_t glue_length = strlen( glue );
     char * target      = dest;  // where to copy the next elements
     *target            = '\0';
-    for ( size_t i = fist; i < last; i++ ) {
+    for ( size_t i = first; i < last; i++ ) {
         if ( i > 0 ) {  // need glue ?
             strcat( target, glue );
             target += glue_length;

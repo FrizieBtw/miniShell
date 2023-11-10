@@ -9,7 +9,6 @@ struct Shell {
     int line_number;
     size_t buffer_size;
     char * buffer;
-    char * pwd;
 };
 
 void shell_init(struct Shell *s);

@@ -68,6 +68,11 @@ void shell_execute_line(struct Shell *s){
             system(strjoinarray(cmd, &cmd_line, 1, cmd_line.size, " "));
         }
     }
+    else if (strcmp(args, "cmds") == 0) {
+        for (int i = 0; i < (int)( s->buffer_size ); i++) {
+            printf("%d: %s\n", i, &s->buffer[i]);
+        }
+    }
     else {
         printf("Commande inconnue.\n");
     }
@@ -75,13 +80,14 @@ void shell_execute_line(struct Shell *s){
 }
 
 void shell_buffering(struct Shell *s, struct StringVector *cmd_line){
-    if (s->buffer_size == 10) {
-        string_vector_free(&s->buffer[10]);
+    if (s->buffer_size > 0) {
+        string_vector_free(&s->buffer[s->buffer_size - 1]);
         for (int i = s->buffer_size; i > 0; i--) {
             s->buffer[i] = s->buffer[i-1];
         }
     }
     s->buffer[0] = *cmd_line;
+    s->buffer_size++;
 }
 
 int main(int argc, char** argv)
